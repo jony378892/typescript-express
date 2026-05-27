@@ -11,11 +11,13 @@ const app: Application = express();
 const port = config.port;
 
 app.use(express.json());
+app.use(express.text());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-app.use((req: Request, res: Response) => {
-  res.json({
+app.use("/", (req: Request, res: Response) => {
+  res.status(200).json({
     success: true,
     message: "Welcome to the application",
   });
