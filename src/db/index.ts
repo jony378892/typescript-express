@@ -24,6 +24,21 @@ const initDB = async () => {
   } catch (error) {
     console.log("Error connecting database! ", error);
   }
+
+  await pool.query(`
+    create table if not exists profiles(
+    id serial primary key,
+    user_id int unique references users(id) on delete cascade,
+
+    bio text,
+    address text,
+    phone varchar(15),
+    gender varchar(10),
+
+    created_at timestamp default current_timestamp,
+    updated_at timestamp default current_timestamp
+    )
+    `);
 };
 
 export default initDB;

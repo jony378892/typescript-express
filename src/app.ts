@@ -6,6 +6,8 @@ import express, {
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { userRoute } from "./modules/user/user.route.ts";
+import defaultRoute from "./middleware/default.ts";
+import { ProfileRoute } from "./modules/profile/profile.route.ts";
 
 const app: Application = express();
 
@@ -16,12 +18,8 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use("/api/users", userRoute);
+app.use("/api/profiles", ProfileRoute);
 
-app.use("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: "Welcome to the application",
-  });
-});
+app.use("/", defaultRoute);
 
 export default app;
